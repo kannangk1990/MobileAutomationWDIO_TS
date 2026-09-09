@@ -1,0 +1,30 @@
+name: Mobile automation
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  cloud-smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    if: ${{ secrets.CLOUD_USERNAME != '' && secrets.CLOUD_ACCESS_KEY != '' && secrets.CLOUD_APP_ID != '' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run test:cloud
+        env:
+          CLOUD_USERNAME: ${{ secrets.CLOUD_USERNAME }}
+          CLOUD_ACCESS_KEY: ${{ secrets.CLOUD_ACCESS_KEY }}
+          CLOUD_APP_ID: ${{ secrets.CLOUD_APP_ID }}
+          CLOUD_DEVICE_NAME: Google Pixel 9
+          CLOUD_PLATFORM_VERSION: '15'
+          CLOUD_PROJECT: mobile-wdio-ts
+          CLOUD_BUILD: github-${{ github.run_number }}

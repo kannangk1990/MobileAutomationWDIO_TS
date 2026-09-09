@@ -1,0 +1,12 @@
+node_modules/
+apps/*.apk
+.env
+.env.*
+!.env.example
+.DS_Store
+coverage/
+allure-results/
+allure-report/
+logs/
+*.log
+.vscode/settings.json
