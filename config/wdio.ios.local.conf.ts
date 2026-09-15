@@ -1,5 +1,5 @@
 import {
-  appPath,
+  iosAppPath,
   localAppCapability,
   sharedConfig,
   type FrameworkConfig,
@@ -18,7 +18,7 @@ export const config: FrameworkConfig = {
       'appium:platformVersion': process.env.IOS_PLATFORM_VERSION || '18.5',
       'appium:bundleId': process.env.IOS_BUNDLE_ID,
       'appium:newCommandTimeout': 180,
-      ...localAppCapability(appPath),
+      ...localAppCapability(iosAppPath),
     },
   ],
 };

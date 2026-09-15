@@ -1,5 +1,5 @@
 import {
-  appPath,
+  androidAppPath,
   localAppCapability,
   sharedConfig,
   type FrameworkConfig,
@@ -20,7 +20,7 @@ export const config: FrameworkConfig = {
       'appium:appActivity': process.env.ANDROID_APP_ACTIVITY || '.MainActivity',
       'appium:autoGrantPermissions': true,
       'appium:newCommandTimeout': 180,
-      ...localAppCapability(appPath),
+      ...localAppCapability(androidAppPath),
     },
   ],
 };

@@ -1,5 +1,8 @@
 node_modules/
 apps/*.apk
+apps/*.zip
+apps/**/*.zip
+apps/**/*.app/
 .env
 .env.*
 !.env.example

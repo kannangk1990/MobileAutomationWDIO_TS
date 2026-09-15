@@ -7,10 +7,23 @@ on:
   pull_request:
 
 jobs:
+  static-validation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - run: npm run format:check
+
   cloud-smoke:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    if: ${{ secrets.CLOUD_USERNAME != '' && secrets.CLOUD_ACCESS_KEY != '' && secrets.CLOUD_APP_ID != '' }}
+    if: ${{ vars.RUN_CLOUD_TESTS == 'true' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -28,3 +41,20 @@ jobs:
           CLOUD_PLATFORM_VERSION: '15'
           CLOUD_PROJECT: mobile-wdio-ts
           CLOUD_BUILD: github-${{ github.run_number }}
+      - name: Generate Allure report
+        if: ${{ always() }}
+        run: npm run report:allure:generate
+      - name: Upload Allure results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-${{ github.run_number }}
+          path: allure-results
+          if-no-files-found: ignore
+      - name: Upload Allure report
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report-${{ github.run_number }}
+          path: allure-report
+          if-no-files-found: ignore
