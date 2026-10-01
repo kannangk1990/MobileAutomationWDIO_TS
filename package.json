@@ -37,7 +37,7 @@
     "appium-xcuitest-driver": "^12.11.1",
     "allure-commandline": "^2.43.0",
     "dotenv": "^17.4.2",
-    "eslint": "^10.10.0",
+    "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-wdio": "^9.8.0",
     "husky": "^9.1.7",
